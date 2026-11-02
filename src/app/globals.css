@@ -1,26 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: #0F0F14;
+  --color-foreground: #E8E6E3;
+  --color-muted: #6B6880;
+  --color-muted-foreground: #9B97A8;
+  --color-card: #1A1A2E;
+  --color-card-foreground: #E8E6E3;
+  --color-border: #2A2A3E;
+  --color-accent: #D4A574;
+  --color-accent-foreground: #0F0F14;
+  --color-lavender: #C4B5D4;
+  --color-lavender-muted: #9B8FB3;
+  --color-destructive: #E85D5D;
+
+  --font-serif: "Noto Serif SC", "Georgia", serif;
+  --font-sans: "DM Sans", "system-ui", sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+}
+
+/* 毛玻璃效果 */
+.glass {
+  background: rgba(26, 26, 46, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-strong {
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 暖金色光晕 */
+.glow-accent {
+  box-shadow: 0 0 20px rgba(212, 165, 116, 0.15), 0 0 60px rgba(212, 165, 116, 0.05);
+}
+
+/* 音乐卡片动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+/* 弹窗滑入 */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 情绪标签弹跳 */
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.5); }
+  60% { transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 播放按钮脉动 */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.4; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.playing-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+/* Tiptap 编辑器样式 */
+.ProseMirror {
+  outline: none;
+  min-height: 300px;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--color-foreground);
+}
+
+.ProseMirror p {
+  margin-bottom: 0.8em;
+}
+
+.ProseMirror h1 {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.6em;
+  color: var(--color-foreground);
+}
+
+.ProseMirror h2 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  color: var(--color-foreground);
+}
+
+.ProseMirror h3 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 0.4em;
+  color: var(--color-foreground);
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 1.5em;
+  margin-bottom: 0.8em;
+}
+
+.ProseMirror li {
+  margin-bottom: 0.3em;
+}
+
+.ProseMirror blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1em;
+  margin-left: 0;
+  margin-bottom: 0.8em;
+  color: var(--color-muted-foreground);
+  font-style: italic;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--color-muted);
+  pointer-events: none;
+  height: 0;
+}
+
+.ProseMirror :focus {
+  outline: none;
 }
